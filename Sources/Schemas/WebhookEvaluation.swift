@@ -1,0 +1,45 @@
+import Foundation
+
+/// Result of an evaluation run for CTA/guardrail events.
+public struct WebhookEvaluation: Codable, Hashable, Sendable {
+    public let score: Nullable<Double>?
+    public let passed: Nullable<Bool>?
+    public let content: Nullable<String>?
+    /// Additional properties that are not explicitly defined in the schema
+    public let additionalProperties: [String: JSONValue]
+
+    public init(
+        score: Nullable<Double>? = nil,
+        passed: Nullable<Bool>? = nil,
+        content: Nullable<String>? = nil,
+        additionalProperties: [String: JSONValue] = .init()
+    ) {
+        self.score = score
+        self.passed = passed
+        self.content = content
+        self.additionalProperties = additionalProperties
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.score = try container.decodeNullableIfPresent(Double.self, forKey: .score)
+        self.passed = try container.decodeNullableIfPresent(Bool.self, forKey: .passed)
+        self.content = try container.decodeNullableIfPresent(String.self, forKey: .content)
+        self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
+    }
+
+    public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try encoder.encodeAdditionalProperties(self.additionalProperties)
+        try container.encodeNullableIfPresent(self.score, forKey: .score)
+        try container.encodeNullableIfPresent(self.passed, forKey: .passed)
+        try container.encodeNullableIfPresent(self.content, forKey: .content)
+    }
+
+    /// Keys for encoding/decoding struct properties.
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case score
+        case passed
+        case content
+    }
+}
