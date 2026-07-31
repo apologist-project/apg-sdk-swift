@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Apologist
 
 @Suite("CtAsClient Wire Tests") struct CtAsClientWireTests {
     @Test func matchCtas1() async throws -> Void {
@@ -25,7 +25,7 @@ import Api
                 """#.utf8
             )
         )
-        let client = ApiClient(
+        let client = ApologistAgentClient(
             baseURL: "https://api.fern.com",
             apiKey: "<value>",
             urlSession: stub.urlSession
@@ -71,7 +71,7 @@ import Api
                 """#.utf8
             )
         )
-        let client = ApiClient(
+        let client = ApologistAgentClient(
             baseURL: "https://api.fern.com",
             apiKey: "<value>",
             urlSession: stub.urlSession
@@ -100,7 +100,7 @@ import Api
                 """#.utf8
             )
         )
-        let client = ApiClient(
+        let client = ApologistAgentClient(
             baseURL: "https://api.fern.com",
             apiKey: "<value>",
             urlSession: stub.urlSession

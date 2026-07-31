@@ -11,10 +11,10 @@ public final class ChatClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.chat.listChatCompletions()
     /// }
@@ -57,10 +57,10 @@ public final class ChatClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.chat.createChatCompletion(request: ChatCompletionRequest.jsonValue(
     ///         .object([
@@ -87,10 +87,10 @@ public final class ChatClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.chat.likeCompletion(
     ///         id: "id",
@@ -117,10 +117,10 @@ public final class ChatClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.chat.flagCompletion(
     ///         id: "id",
@@ -147,10 +147,10 @@ public final class ChatClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.chat.feedbackCompletion(
     ///         id: "id",
@@ -177,10 +177,10 @@ public final class ChatClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.chat.shareCompletion(
     ///         id: "id",
@@ -207,10 +207,10 @@ public final class ChatClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.chat.getChatCompletion(id: "id")
     /// }

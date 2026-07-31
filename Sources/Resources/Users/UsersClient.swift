@@ -11,10 +11,10 @@ public final class UsersClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.users.listUsers()
     /// }
@@ -47,10 +47,10 @@ public final class UsersClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.users.listUserFlags()
     /// }
@@ -77,10 +77,10 @@ public final class UsersClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.users.getUser(userId: "user_id")
     /// }
@@ -103,10 +103,10 @@ public final class UsersClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.users.updateUser(
     ///         userId: "user_id",

@@ -50,10 +50,10 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.createChatCompletion(request: ChatCompletionRequest.jsonValue(
         .object([
@@ -70,9 +70,9 @@ try await main()
 This SDK allows you to configure different environments for API requests.
 
 ```swift
-import Api
+import Apologist
 
-let client = ApiClient(
+let client = ApologistAgentClient(
     apiKey: "YOUR_API_KEY",
     environment: .default
 )
@@ -83,14 +83,14 @@ let client = ApiClient(
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Api
+import Apologist
 
-let client = ApiClient(apiKey: "YOUR_API_KEY")
+let client = ApologistAgentClient(apiKey: "YOUR_API_KEY")
 
 do {
     let response = try await client.chat.createChatCompletion(...)
     // Handle successful response
-} catch let error as ApiError {
+} catch let error as ApologistError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -113,7 +113,7 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Api
+import Apologist
 
 let request = Requests.LikeRequest(
     ...
@@ -162,9 +162,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
-let client = ApiClient(
+let client = ApologistAgentClient(
     apiKey: "YOUR_API_KEY",
     urlSession: // Provide your implementation here
 )

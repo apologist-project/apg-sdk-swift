@@ -11,10 +11,10 @@ public final class BenchmarksClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.benchmarks.listBenchmarkRuns(id: "id")
     /// }
@@ -51,10 +51,10 @@ public final class BenchmarksClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.benchmarks.runBenchmark(
     ///         id: "id",
@@ -81,10 +81,10 @@ public final class BenchmarksClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.benchmarks.getBenchmarkRun(
     ///         id: "id",

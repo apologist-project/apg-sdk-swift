@@ -1,4 +1,4 @@
-import Api
+import Apologist
 import Foundation
 
 final class HTTPStub {
