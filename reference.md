@@ -28,10 +28,10 @@ Returns a paginated list of chat completions (prompts) for the agent, with appli
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.listChatCompletions()
 }
@@ -235,10 +235,10 @@ Creates a chat completion using the agent's configured model. Supports both stre
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.createChatCompletion(request: ChatCompletionRequest.jsonValue(
         .object([
@@ -310,10 +310,10 @@ Updates the like status of a specific chat completion
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.likeCompletion(
         id: "id",
@@ -392,10 +392,10 @@ Updates the flagged status of a specific chat completion
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.flagCompletion(
         id: "id",
@@ -474,10 +474,10 @@ Adds user feedback to a specific chat completion
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.feedbackCompletion(
         id: "id",
@@ -556,10 +556,10 @@ Creates a share record for a specific chat completion
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.shareCompletion(
         id: "id",
@@ -638,10 +638,10 @@ Returns a single chat completion (prompt) by numeric id or UUID, including appli
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.chat.getChatCompletion(id: "id")
 }
@@ -710,10 +710,10 @@ Performs a semantic search across the agent's corpus of knowledge
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.corpus.searchCorpus(request: .init(query: "query"))
 }
@@ -781,10 +781,10 @@ Records that a user viewed a specific corpus item
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.corpus.logCorpusView(
         model: "model",
@@ -872,10 +872,10 @@ Records that a corpus item was shown to a user
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.corpus.logCorpusImpression(
         model: "model",
@@ -963,10 +963,10 @@ Records a referral for a corpus item and, when a `url` is supplied, issues a 302
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.corpus.logCorpusReferralRedirect(
         model: "model",
@@ -1070,10 +1070,10 @@ Records that a user was referred to a corpus item
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.corpus.logCorpusReferral(
         model: "model",
@@ -1162,10 +1162,10 @@ Returns a paginated list of evaluations for the evaluator, scoped to the request
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.evaluators.listEvaluations(id: "id")
 }
@@ -1329,10 +1329,10 @@ Runs an evaluation on the provided content using the specified evaluator
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.evaluators.evaluateContent(
         id: "id",
@@ -1413,10 +1413,10 @@ Returns a single evaluation for the evaluator, scoped to the requesting agent.
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.evaluators.getEvaluation(
         id: "id",
@@ -1496,10 +1496,10 @@ Finds matching CTAs based on conversation context, user, session, device, or mes
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.ctAs.matchCtas(request: CtaMatchRequest.jsonValue(
         .object([
@@ -1571,10 +1571,10 @@ Records that a user clicked on a specific CTA
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.ctAs.logCtaClick(
         id: "id",
@@ -1654,10 +1654,10 @@ Returns a paginated list of users for the agent's team, with applied tags expand
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.users.listUsers()
 }
@@ -1773,10 +1773,10 @@ Returns a paginated list of user flag definitions for the agent's team (all colu
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.users.listUserFlags()
 }
@@ -1852,10 +1852,10 @@ Returns a single user by external id or internal id, with expanded tags and the 
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.users.getUser(userId: "user_id")
 }
@@ -1923,10 +1923,10 @@ Updates a user's external_id and/or tags and upserts the persisted responder for
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.users.updateUser(
         userId: "user_id",
@@ -2006,10 +2006,10 @@ Returns a paginated list of runs for a benchmark, scoped to the requesting agent
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.benchmarks.listBenchmarkRuns(id: "id")
 }
@@ -2165,10 +2165,10 @@ Executes a benchmark run and returns the aggregated result with nested evaluator
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.benchmarks.runBenchmark(
         id: "id",
@@ -2247,10 +2247,10 @@ Returns a single benchmark run by id or UUID, scoped to the requesting agent, in
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.benchmarks.getBenchmarkRun(
         id: "id",
@@ -2330,10 +2330,10 @@ Returns the status of the Discord channel. Used as a lightweight health/verifica
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.getDiscordChannelStatus(id: "id")
 }
@@ -2401,10 +2401,10 @@ Receives Discord interaction callbacks for the channel. Requests are verified vi
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.receiveDiscordInteraction(
         id: "id",
@@ -2503,10 +2503,10 @@ Handles the Meta webhook verification handshake, echoing `hub.challenge` when `h
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.verifyFacebookWebhook(
         id: "id",
@@ -2602,10 +2602,10 @@ Receives Facebook/Messenger (and Instagram-style) message events for the channel
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.receiveFacebookMessage(
         id: "id",
@@ -2686,10 +2686,10 @@ Returns a static HTML privacy policy page for the Instagram integration.
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.getInstagramPrivacyPolicy(id: "id")
 }
@@ -2757,10 +2757,10 @@ Receives Telegram bot update events for the channel. Non-message updates are ack
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.receiveTelegramUpdate(
         id: "id",
@@ -2841,10 +2841,10 @@ Receives inbound Twilio messages for the channel as form-encoded data. Payload f
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.receiveTwilioMessage(
         id: "id",
@@ -2924,10 +2924,10 @@ Public, unauthenticated read of the messages behind a share token. The token is 
 
 ```swift
 import Foundation
-import Api
+import Apologist
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.shares.getSharedMessages(token: "token")
 }

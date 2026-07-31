@@ -11,10 +11,10 @@ public final class ChannelsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.getDiscordChannelStatus(id: "id")
     /// }
@@ -37,10 +37,10 @@ public final class ChannelsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.receiveDiscordInteraction(
     ///         id: "id",
@@ -77,10 +77,10 @@ public final class ChannelsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.verifyFacebookWebhook(
     ///         id: "id",
@@ -112,10 +112,10 @@ public final class ChannelsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.receiveFacebookMessage(
     ///         id: "id",
@@ -144,10 +144,10 @@ public final class ChannelsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.getInstagramPrivacyPolicy(id: "id")
     /// }
@@ -170,10 +170,10 @@ public final class ChannelsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.receiveTelegramUpdate(
     ///         id: "id",
@@ -202,10 +202,10 @@ public final class ChannelsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.receiveTwilioMessage(
     ///         id: "id",

@@ -11,10 +11,10 @@ public final class CtAsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.ctAs.matchCtas(request: CtaMatchRequest.jsonValue(
     ///         .object([
@@ -41,10 +41,10 @@ public final class CtAsClient: Sendable {
     ///
     /// ```swift
     /// import Foundation
-    /// import Api
+    /// import Apologist
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient(apiKey: "<value>")
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.ctAs.logCtaClick(
     ///         id: "id",

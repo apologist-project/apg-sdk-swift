@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Apologist
 
 @Suite("WebhooksClient Wire Tests") struct WebhooksClientWireTests {
 }

@@ -1,7 +1,7 @@
 import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
-public final class ApiClient: Sendable {
+public final class ApologistAgentClient: Sendable {
     public let chat: ChatClient
     public let corpus: CorpusClient
     public let evaluators: EvaluatorsClient
@@ -22,7 +22,7 @@ public final class ApiClient: Sendable {
     /// - Parameter maxRetries: Maximum number of retries for failed requests. Defaults to 2.
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
-        baseURL: String = ApiEnvironment.default.rawValue,
+        baseURL: String = ApologistEnvironment.default.rawValue,
         apiKey: String? = nil,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
