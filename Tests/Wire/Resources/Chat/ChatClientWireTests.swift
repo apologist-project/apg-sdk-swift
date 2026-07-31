@@ -40,61 +40,6 @@ import Apologist
         try #require(response == expectedResponse)
     }
 
-    @Test func listChatCompletions2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "data": [
-                    {
-                      "data": {
-                        "key": "value"
-                      }
-                    },
-                    {
-                      "data": {
-                        "key": "value"
-                      }
-                    }
-                  ],
-                  "total": 1,
-                  "page": 1,
-                  "per_page": 1
-                }
-                """#.utf8
-            )
-        )
-        let client = ApologistAgentClient(
-            baseURL: "https://api.fern.com",
-            apiKey: "<value>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListChatCompletionsResponse(
-            data: Optional([
-                [
-                    "data": JSONValue.object(
-                        [
-                            "key": JSONValue.string("value")
-                        ]
-                    )
-                ],
-                [
-                    "data": JSONValue.object(
-                        [
-                            "key": JSONValue.string("value")
-                        ]
-                    )
-                ]
-            ]),
-            total: Optional(1),
-            page: Optional(1),
-            perPage: Optional(1)
-        )
-        let response = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
     @Test func createChatCompletion1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
@@ -232,65 +177,7 @@ import Apologist
         try #require(response == expectedResponse)
     }
 
-    @Test func likeCompletion2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "success": true,
-                  "message": "message"
-                }
-                """#.utf8
-            )
-        )
-        let client = ApologistAgentClient(
-            baseURL: "https://api.fern.com",
-            apiKey: "<value>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = SuccessResponse(
-            success: true,
-            message: "message"
-        )
-        let response = try await client.chat.likeCompletion(
-            id: "id",
-            request: .init(liked: true),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
     @Test func flagCompletion1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "success": true,
-                  "message": "message"
-                }
-                """#.utf8
-            )
-        )
-        let client = ApologistAgentClient(
-            baseURL: "https://api.fern.com",
-            apiKey: "<value>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = SuccessResponse(
-            success: true,
-            message: "message"
-        )
-        let response = try await client.chat.flagCompletion(
-            id: "id",
-            request: .init(flagged: true),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func flagCompletion2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Foundation.Data(
@@ -348,65 +235,7 @@ import Apologist
         try #require(response == expectedResponse)
     }
 
-    @Test func feedbackCompletion2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "success": true,
-                  "message": "message"
-                }
-                """#.utf8
-            )
-        )
-        let client = ApologistAgentClient(
-            baseURL: "https://api.fern.com",
-            apiKey: "<value>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = SuccessResponse(
-            success: true,
-            message: "message"
-        )
-        let response = try await client.chat.feedbackCompletion(
-            id: "id",
-            request: .init(feedback: "x"),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
     @Test func shareCompletion1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "success": true,
-                  "message": "message"
-                }
-                """#.utf8
-            )
-        )
-        let client = ApologistAgentClient(
-            baseURL: "https://api.fern.com",
-            apiKey: "<value>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = SuccessResponse(
-            success: true,
-            message: "message"
-        )
-        let response = try await client.chat.shareCompletion(
-            id: "id",
-            request: .init(),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func shareCompletion2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Foundation.Data(
@@ -456,42 +285,6 @@ import Apologist
         let expectedResponse = GetChatCompletionResponse(
             data: Optional([
                 "key": JSONValue.string("value")
-            ])
-        )
-        let response = try await client.chat.getChatCompletion(
-            id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getChatCompletion2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "data": {
-                    "data": {
-                      "key": "value"
-                    }
-                  }
-                }
-                """#.utf8
-            )
-        )
-        let client = ApologistAgentClient(
-            baseURL: "https://api.fern.com",
-            apiKey: "<value>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = GetChatCompletionResponse(
-            data: Optional([
-                "data": JSONValue.object(
-                    [
-                        "key": JSONValue.string("value")
-                    ]
-                )
             ])
         )
         let response = try await client.chat.getChatCompletion(

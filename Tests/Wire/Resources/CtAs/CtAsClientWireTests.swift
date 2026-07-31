@@ -87,33 +87,4 @@ import Apologist
         )
         try #require(response == expectedResponse)
     }
-
-    @Test func logCtaClick2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Foundation.Data(
-                #"""
-                {
-                  "success": true,
-                  "message": "message"
-                }
-                """#.utf8
-            )
-        )
-        let client = ApologistAgentClient(
-            baseURL: "https://api.fern.com",
-            apiKey: "<value>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = SuccessResponse(
-            success: true,
-            message: "message"
-        )
-        let response = try await client.ctAs.logCtaClick(
-            id: "id",
-            request: .init(promptId: "prompt_id"),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
 }
