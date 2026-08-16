@@ -8,6 +8,8 @@ public final class ApologistAgentClient: Sendable {
     public let ctAs: CtAsClient
     public let users: UsersClient
     public let benchmarks: BenchmarksClient
+    public let agent: AgentClient
+    public let conversations: ConversationsClient
     public let channels: ChannelsClient
     public let shares: SharesClient
     public let webhooks: WebhooksClient
@@ -69,6 +71,8 @@ public final class ApologistAgentClient: Sendable {
         self.ctAs = CtAsClient(config: config)
         self.users = UsersClient(config: config)
         self.benchmarks = BenchmarksClient(config: config)
+        self.agent = AgentClient(config: config)
+        self.conversations = ConversationsClient(config: config)
         self.channels = ChannelsClient(config: config)
         self.shares = SharesClient(config: config)
         self.webhooks = WebhooksClient(config: config)
