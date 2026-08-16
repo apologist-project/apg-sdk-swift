@@ -13,6 +13,7 @@ import Apologist
                     {
                       "id": "id",
                       "external_id": "external_id",
+                      "referral_code": "referral_code",
                       "team_id": 1,
                       "created_at": "created_at",
                       "migrated_at": "migrated_at",
@@ -40,6 +41,7 @@ import Apologist
                 User(
                     id: Optional("id"),
                     externalId: Optional(Nullable<String>.value("external_id")),
+                    referralCode: Optional(Nullable<String>.value("referral_code")),
                     teamId: Optional(1),
                     createdAt: Optional("created_at"),
                     migratedAt: Optional(Nullable<String>.value("migrated_at")),
@@ -114,6 +116,7 @@ import Apologist
                   "data": {
                     "id": "id",
                     "external_id": "external_id",
+                    "referral_code": "referral_code",
                     "team_id": 1,
                     "created_at": "created_at",
                     "migrated_at": "migrated_at",
@@ -136,6 +139,7 @@ import Apologist
             data: Optional(User(
                 id: Optional("id"),
                 externalId: Optional(Nullable<String>.value("external_id")),
+                referralCode: Optional(Nullable<String>.value("referral_code")),
                 teamId: Optional(1),
                 createdAt: Optional("created_at"),
                 migratedAt: Optional(Nullable<String>.value("migrated_at")),
@@ -164,6 +168,7 @@ import Apologist
                   "data": {
                     "id": "id",
                     "external_id": "external_id",
+                    "referral_code": "referral_code",
                     "team_id": 1,
                     "created_at": "created_at",
                     "migrated_at": "migrated_at",
@@ -186,6 +191,7 @@ import Apologist
             data: Optional(User(
                 id: Optional("id"),
                 externalId: Optional(Nullable<String>.value("external_id")),
+                referralCode: Optional(Nullable<String>.value("referral_code")),
                 teamId: Optional(1),
                 createdAt: Optional("created_at"),
                 migratedAt: Optional(Nullable<String>.value("migrated_at")),
