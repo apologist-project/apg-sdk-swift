@@ -73,6 +73,68 @@ public final class ChannelsClient: Sendable {
         )
     }
 
+    /// Returns the status of the LINE channel. Used as a lightweight health/verification endpoint.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.channels.getLineChannelStatus(id: "id")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The channel id
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getLineChannelStatus(id: String, requestOptions: RequestOptions? = nil) async throws -> GetLineChannelStatusResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/channels/\(id)/line",
+            requestOptions: requestOptions,
+            responseType: GetLineChannelStatusResponse.self
+        )
+    }
+
+    /// Receives LINE Messaging API webhook events for the channel. Requests are verified via the `x-line-signature` HMAC-SHA256 (Base64) header using the channel secret unless an `api_key` is present. Payload shape is defined by LINE. The route acknowledges quickly and processes text `message` and `follow` events asynchronously.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.channels.receiveLineWebhook(
+    ///         id: "id",
+    ///         request: [
+    ///             "key": .string("value")
+    ///         ]
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The channel id
+    /// - Parameter lineSignature: Base64-encoded HMAC-SHA256 of the raw body keyed with the LINE channel secret. Required when the webhook URL does not include an api_key.
+    /// - Parameter request: LINE webhook payload (`destination` + `events`).
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func receiveLineWebhook(id: String, lineSignature: String? = nil, request: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/channels/\(id)/line",
+            headers: [
+                "x-line-signature": lineSignature
+            ],
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
+
     /// Handles the Meta webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
     ///
     /// ```swift

@@ -4,6 +4,8 @@ public struct User: Codable, Hashable, Sendable {
     /// Internal user id (UUID).
     public let id: String?
     public let externalId: Nullable<String>?
+    /// First-write-wins acquisition / campaign referral code.
+    public let referralCode: Nullable<String>?
     public let teamId: Int?
     public let createdAt: String?
     public let migratedAt: Nullable<String>?
@@ -16,6 +18,7 @@ public struct User: Codable, Hashable, Sendable {
     public init(
         id: String? = nil,
         externalId: Nullable<String>? = nil,
+        referralCode: Nullable<String>? = nil,
         teamId: Int? = nil,
         createdAt: String? = nil,
         migratedAt: Nullable<String>? = nil,
@@ -26,6 +29,7 @@ public struct User: Codable, Hashable, Sendable {
     ) {
         self.id = id
         self.externalId = externalId
+        self.referralCode = referralCode
         self.teamId = teamId
         self.createdAt = createdAt
         self.migratedAt = migratedAt
@@ -39,6 +43,7 @@ public struct User: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decodeIfPresent(String.self, forKey: .id)
         self.externalId = try container.decodeNullableIfPresent(String.self, forKey: .externalId)
+        self.referralCode = try container.decodeNullableIfPresent(String.self, forKey: .referralCode)
         self.teamId = try container.decodeIfPresent(Int.self, forKey: .teamId)
         self.createdAt = try container.decodeIfPresent(String.self, forKey: .createdAt)
         self.migratedAt = try container.decodeNullableIfPresent(String.self, forKey: .migratedAt)
@@ -53,6 +58,7 @@ public struct User: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.id, forKey: .id)
         try container.encodeNullableIfPresent(self.externalId, forKey: .externalId)
+        try container.encodeNullableIfPresent(self.referralCode, forKey: .referralCode)
         try container.encodeIfPresent(self.teamId, forKey: .teamId)
         try container.encodeIfPresent(self.createdAt, forKey: .createdAt)
         try container.encodeNullableIfPresent(self.migratedAt, forKey: .migratedAt)
@@ -65,6 +71,7 @@ public struct User: Codable, Hashable, Sendable {
     enum CodingKeys: String, CodingKey, CaseIterable {
         case id
         case externalId = "external_id"
+        case referralCode = "referral_code"
         case teamId = "team_id"
         case createdAt = "created_at"
         case migratedAt = "migrated_at"

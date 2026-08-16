@@ -9,6 +9,8 @@ public struct ChatCompletionRequestMetadata: Codable, Hashable, Sendable {
     public let parentHost: Nullable<String>?
     public let session: Nullable<String>?
     public let device: Nullable<String>?
+    /// Acquisition / campaign referral code stored on the user first-write-wins. Empty values are ignored; an existing user referral_code is never overwritten. The Agent UI maps ?ref=, then ?referral_code=, then ?utm_campaign= into this field.
+    public let referralCode: Nullable<String>?
     public let sharedPrompt: Nullable<Int>?
     public let translation: Nullable<String>?
     /// String key/value pairs substituted into `{key}` placeholders in the assembled system prompt. Never persisted; omitted from response metadata. Reserved system keys (language, bible, translation, passages, date/geo tokens) cannot be overridden.
@@ -25,6 +27,7 @@ public struct ChatCompletionRequestMetadata: Codable, Hashable, Sendable {
         parentHost: Nullable<String>? = nil,
         session: Nullable<String>? = nil,
         device: Nullable<String>? = nil,
+        referralCode: Nullable<String>? = nil,
         sharedPrompt: Nullable<Int>? = nil,
         translation: Nullable<String>? = nil,
         variables: Nullable<[String: Nullable<String>]>? = nil,
@@ -38,6 +41,7 @@ public struct ChatCompletionRequestMetadata: Codable, Hashable, Sendable {
         self.parentHost = parentHost
         self.session = session
         self.device = device
+        self.referralCode = referralCode
         self.sharedPrompt = sharedPrompt
         self.translation = translation
         self.variables = variables
@@ -54,6 +58,7 @@ public struct ChatCompletionRequestMetadata: Codable, Hashable, Sendable {
         self.parentHost = try container.decodeNullableIfPresent(String.self, forKey: .parentHost)
         self.session = try container.decodeNullableIfPresent(String.self, forKey: .session)
         self.device = try container.decodeNullableIfPresent(String.self, forKey: .device)
+        self.referralCode = try container.decodeNullableIfPresent(String.self, forKey: .referralCode)
         self.sharedPrompt = try container.decodeNullableIfPresent(Int.self, forKey: .sharedPrompt)
         self.translation = try container.decodeNullableIfPresent(String.self, forKey: .translation)
         self.variables = try container.decodeNullableIfPresent([String: Nullable<String>].self, forKey: .variables)
@@ -71,6 +76,7 @@ public struct ChatCompletionRequestMetadata: Codable, Hashable, Sendable {
         try container.encodeNullableIfPresent(self.parentHost, forKey: .parentHost)
         try container.encodeNullableIfPresent(self.session, forKey: .session)
         try container.encodeNullableIfPresent(self.device, forKey: .device)
+        try container.encodeNullableIfPresent(self.referralCode, forKey: .referralCode)
         try container.encodeNullableIfPresent(self.sharedPrompt, forKey: .sharedPrompt)
         try container.encodeNullableIfPresent(self.translation, forKey: .translation)
         try container.encodeNullableIfPresent(self.variables, forKey: .variables)
@@ -86,6 +92,7 @@ public struct ChatCompletionRequestMetadata: Codable, Hashable, Sendable {
         case parentHost = "parent_host"
         case session
         case device
+        case referralCode = "referral_code"
         case sharedPrompt = "shared_prompt"
         case translation
         case variables
