@@ -288,4 +288,75 @@ public final class ChannelsClient: Sendable {
             requestOptions: requestOptions
         )
     }
+
+    /// Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.channels.verifyWhatsAppWebhook(
+    ///         id: "id",
+    ///         hubMode: .subscribe,
+    ///         hubVerifyToken: "hub.verify_token"
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The channel id
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func verifyWhatsAppWebhook(id: String, hubMode: VerifyWhatsAppWebhookRequestHubMode, hubVerifyToken: String, hubChallenge: String? = nil, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/channels/\(id)/whatsapp",
+            queryParams: [
+                "hub.mode": .string(hubMode.rawValue), 
+                "hub.verify_token": .string(hubVerifyToken), 
+                "hub.challenge": hubChallenge.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
+    /// Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.channels.receiveWhatsAppMessage(
+    ///         id: "id",
+    ///         request: [
+    ///             "key": .string("value")
+    ///         ]
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The channel id
+    /// - Parameter hubSignature256: Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+    /// - Parameter request: WhatsApp Cloud API webhook payload (`entry` + `changes`).
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func receiveWhatsAppMessage(id: String, hubSignature256: String? = nil, request: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/channels/\(id)/whatsapp",
+            headers: [
+                "x-hub-signature-256": hubSignature256
+            ],
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
 }
