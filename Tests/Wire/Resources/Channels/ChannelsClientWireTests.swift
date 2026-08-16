@@ -108,4 +108,28 @@ import Apologist
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func verifyWhatsAppWebhook1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                string
+                """#.utf8
+            )
+        )
+        let client = ApologistAgentClient(
+            baseURL: "https://api.fern.com",
+            apiKey: "<value>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = "string"
+        let response = try await client.channels.verifyWhatsAppWebhook(
+            id: "id",
+            hubMode: .subscribe,
+            hubVerifyToken: "hub.verify_token",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }
