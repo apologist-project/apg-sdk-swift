@@ -12,5 +12,43 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-swift-sdk: 0.36.0
-current_generation: d6d1e9fb220abe6efcfaf505108fe7d106bbfc50
-patches: []
+  - commit_sha: 263a6593e87d76606c9e83b54aa18670bd46b707
+    tree_hash: 93f5876a482845ee53bddf70db9228089d0ebd28
+    timestamp: 2026-08-16T19:25:56.533Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-swift-sdk: 0.36.0
+current_generation: 263a6593e87d76606c9e83b54aa18670bd46b707
+patches:
+  - id: patch-37ad750d
+    content_hash: sha256:0ece450516e36f10ae3896ead182c1720a0340e61cf04b956a595cfae0bef757
+    original_commit: 37ad750da675baf5148f583212a5b13f03b19490
+    original_message: Release 1.1.0.
+    original_author: Jake Carlson <jake@carlsonville.com>
+    base_generation: 2f71e6a68b21d22616ddb25ef0db7b76372f4fc2
+    files:
+      - Sources/Version.swift
+    patch_content: |+
+      From 37ad750da675baf5148f583212a5b13f03b19490 Mon Sep 17 00:00:00 2001
+      From: Jake Carlson <jake@carlsonville.com>
+      Date: Sun, 16 Aug 2026 13:28:47 -0500
+      Subject: [PATCH] Release 1.1.0.
+
+      ---
+       Sources/Version.swift | 2 +-
+       1 file changed, 1 insertion(+), 1 deletion(-)
+
+      diff --git a/Sources/Version.swift b/Sources/Version.swift
+      index 7b6772d..030e1ed 100644
+      --- a/Sources/Version.swift
+      +++ b/Sources/Version.swift
+      @@ -1 +1 @@
+      -public let sdkVersion = "0.0.11"
+      +public let sdkVersion = "1.1.0"
+      -- 
+      2.52.0
+
+    theirs_snapshot:
+      Sources/Version.swift: |
+        public let sdkVersion = "1.1.0"
+    status: unresolved
