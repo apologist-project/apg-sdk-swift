@@ -211,4 +211,80 @@ import Apologist
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func scrubUser1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "data": {
+                    "id": "id",
+                    "mode": "scrub",
+                    "redact_requested_at": "redact_requested_at",
+                    "messages_redacted": 1,
+                    "remaining": 1
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApologistAgentClient(
+            baseURL: "https://api.fern.com",
+            apiKey: "<value>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ScrubUserResponse(
+            data: Optional(UserRedactResponse(
+                id: Optional("id"),
+                mode: Optional(UserRedactResponseMode.scrub),
+                redactRequestedAt: Optional(Nullable<String>.value("redact_requested_at")),
+                messagesRedacted: Optional(1),
+                remaining: Optional(1)
+            ))
+        )
+        let response = try await client.users.scrubUser(
+            userId: "user_id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func anonymizeUser1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "data": {
+                    "id": "id",
+                    "mode": "scrub",
+                    "redact_requested_at": "redact_requested_at",
+                    "messages_redacted": 1,
+                    "remaining": 1
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApologistAgentClient(
+            baseURL: "https://api.fern.com",
+            apiKey: "<value>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = AnonymizeUserResponse(
+            data: Optional(UserRedactResponse(
+                id: Optional("id"),
+                mode: Optional(UserRedactResponseMode.scrub),
+                redactRequestedAt: Optional(Nullable<String>.value("redact_requested_at")),
+                messagesRedacted: Optional(1),
+                remaining: Optional(1)
+            ))
+        )
+        let response = try await client.users.anonymizeUser(
+            userId: "user_id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

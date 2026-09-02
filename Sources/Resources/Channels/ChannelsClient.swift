@@ -7,6 +7,70 @@ public final class ChannelsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    /// Returns the status of the Chatwoot channel. Used as a lightweight health/verification endpoint.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.channels.getChatwootChannelStatus(id: "id")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The channel id
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getChatwootChannelStatus(id: String, requestOptions: RequestOptions? = nil) async throws -> GetChatwootChannelStatusResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/channels/\(id)/chatwoot",
+            requestOptions: requestOptions,
+            responseType: GetChatwootChannelStatusResponse.self
+        )
+    }
+
+    /// Receives Chatwoot Agent Bot webhook events for the channel. Chatwoot owns the messaging inbox (Facebook, website widget, and others). This Agent replies through the Chatwoot API and maps native bot handoff to conversation pause/resume. Requests are verified via the `X-Chatwoot-Signature` HMAC-SHA256 header using the configured webhook secret unless an `api_key` is present and no secret is set. The route acknowledges immediately (Chatwoot times out in about 5 seconds) and processes events asynchronously.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.channels.receiveChatwootWebhook(
+    ///         id: "id",
+    ///         request: [
+    ///             "key": .string("value")
+    ///         ]
+    ///     )
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The channel id
+    /// - Parameter chatwootSignature: `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
+    /// - Parameter chatwootTimestamp: Unix timestamp used in the HMAC payload.
+    /// - Parameter request: Chatwoot Agent Bot webhook payload (`event` plus message or conversation fields).
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func receiveChatwootWebhook(id: String, chatwootSignature: String? = nil, chatwootTimestamp: String? = nil, request: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/channels/\(id)/chatwoot",
+            headers: [
+                "X-Chatwoot-Signature": chatwootSignature, 
+                "X-Chatwoot-Timestamp": chatwootTimestamp
+            ],
+            body: request,
+            requestOptions: requestOptions
+        )
+    }
+
     /// Returns the status of the Discord channel. Used as a lightweight health/verification endpoint.
     ///
     /// ```swift
