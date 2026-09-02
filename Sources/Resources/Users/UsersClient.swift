@@ -128,4 +128,56 @@ public final class UsersClient: Sendable {
             responseType: UpdateUserResponse.self
         )
     }
+
+    /// Replaces this user's message-adjacent text with a placeholder. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.users.scrubUser(userId: "user_id")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter userId: The user's external id or internal id
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func scrubUser(userId: String, requestOptions: RequestOptions? = nil) async throws -> ScrubUserResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/users/\(userId)/scrub",
+            requestOptions: requestOptions,
+            responseType: ScrubUserResponse.self
+        )
+    }
+
+    /// Redacts detected personal data in this user's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.users.anonymizeUser(userId: "user_id")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter userId: The user's external id or internal id
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func anonymizeUser(userId: String, requestOptions: RequestOptions? = nil) async throws -> AnonymizeUserResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/users/\(userId)/anonymize",
+            requestOptions: requestOptions,
+            responseType: AnonymizeUserResponse.self
+        )
+    }
 }
