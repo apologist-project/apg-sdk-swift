@@ -18,7 +18,13 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-swift-sdk: 0.36.0
-current_generation: 263a6593e87d76606c9e83b54aa18670bd46b707
+  - commit_sha: 35b9fc1f3f877084dd2a1edde5c861a944de1c75
+    tree_hash: 2197941af86c8ff1b68beb82d3309f5534fd6ccb
+    timestamp: 2026-09-02T05:20:40.282Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-swift-sdk: 0.36.0
+current_generation: 35b9fc1f3f877084dd2a1edde5c861a944de1c75
 patches:
   - id: patch-37ad750d
     content_hash: sha256:0ece450516e36f10ae3896ead182c1720a0340e61cf04b956a595cfae0bef757
@@ -51,4 +57,37 @@ patches:
     theirs_snapshot:
       Sources/Version.swift: |
         public let sdkVersion = "1.1.0"
+    status: unresolved
+  - id: patch-1ab5eea6
+    content_hash: sha256:a5458d9fd5f28412b9afa29a0bcb5d08a90147fe053bbc22dd8a6eb4684309c7
+    original_commit: 1ab5eea6240c901ebf1bb81f5088061382e5cff9
+    original_message: Release 1.2.0.
+    original_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+    base_generation: 503f19b696bc39ca3d5e4ed5251d2b3032480da4
+    files:
+      - Sources/Version.swift
+    patch_content: |+
+      From 1ab5eea6240c901ebf1bb81f5088061382e5cff9 Mon Sep 17 00:00:00 2001
+      From: "github-actions[bot]"
+       <41898282+github-actions[bot]@users.noreply.github.com>
+      Date: Sun, 16 Aug 2026 19:28:17 +0000
+      Subject: [PATCH] Release 1.2.0.
+
+      ---
+       Sources/Version.swift | 2 +-
+       1 file changed, 1 insertion(+), 1 deletion(-)
+
+      diff --git a/Sources/Version.swift b/Sources/Version.swift
+      index bfbc1a8..3cbe88c 100644
+      --- a/Sources/Version.swift
+      +++ b/Sources/Version.swift
+      @@ -1 +1 @@
+      -public let sdkVersion = "0.0.14"
+      +public let sdkVersion = "1.2.0"
+      -- 
+      2.52.0
+
+    theirs_snapshot:
+      Sources/Version.swift: |
+        public let sdkVersion = "1.2.0"
     status: unresolved

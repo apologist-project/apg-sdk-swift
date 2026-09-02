@@ -3,6 +3,36 @@ import Testing
 import Apologist
 
 @Suite("ChannelsClient Wire Tests") struct ChannelsClientWireTests {
+    @Test func getChatwootChannelStatus1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "status": "status",
+                  "channel": "channel",
+                  "active": true
+                }
+                """#.utf8
+            )
+        )
+        let client = ApologistAgentClient(
+            baseURL: "https://api.fern.com",
+            apiKey: "<value>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = GetChatwootChannelStatusResponse(
+            status: Optional("status"),
+            channel: Optional("channel"),
+            active: Optional(true)
+        )
+        let response = try await client.channels.getChatwootChannelStatus(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getDiscordChannelStatus1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
