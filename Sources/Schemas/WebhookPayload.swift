@@ -1,6 +1,6 @@
 import Foundation
 
-/// Canonical JSON body POSTed to a configured webhook URL. `notification`, `event`, and `agent` are always present; the remaining sections appear only when relevant to the event. Treat the payload as additive and ignore unrecognised fields.
+/// Canonical JSON body POSTed to a configured webhook URL. `notification`, `event`, and `agent` are always present; `trace` is present when the event ran inside an instrumented API request. The remaining sections appear only when relevant to the event. Treat the payload as additive and ignore unrecognised fields.
 public struct WebhookPayload: Codable, Hashable, Sendable {
     public let notification: WebhookNotificationRef
     public let event: WebhookEventInfo
@@ -15,9 +15,13 @@ public struct WebhookPayload: Codable, Hashable, Sendable {
     public let cta: WebhookCta?
     /// Present for guardrail_trigger events.
     public let guardrail: WebhookNamedRef?
-    /// Present for CTA/guardrail events that ran an evaluation.
+    /// Present for automation_trigger events.
+    public let automation: WebhookNamedRef?
+    /// Present for CTA, guardrail, or automation events that ran an evaluation.
     public let evaluator: WebhookNamedRef?
     public let evaluation: WebhookEvaluation?
+    /// OpenTelemetry context for the API request that produced this event. Present when the Agent created or continued a W3C trace.
+    public let trace: WebhookPayloadTrace?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -30,8 +34,10 @@ public struct WebhookPayload: Codable, Hashable, Sendable {
         platform: WebhookNamedRef? = nil,
         cta: WebhookCta? = nil,
         guardrail: WebhookNamedRef? = nil,
+        automation: WebhookNamedRef? = nil,
         evaluator: WebhookNamedRef? = nil,
         evaluation: WebhookEvaluation? = nil,
+        trace: WebhookPayloadTrace? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.notification = notification
@@ -42,8 +48,10 @@ public struct WebhookPayload: Codable, Hashable, Sendable {
         self.platform = platform
         self.cta = cta
         self.guardrail = guardrail
+        self.automation = automation
         self.evaluator = evaluator
         self.evaluation = evaluation
+        self.trace = trace
         self.additionalProperties = additionalProperties
     }
 
@@ -57,8 +65,10 @@ public struct WebhookPayload: Codable, Hashable, Sendable {
         self.platform = try container.decodeIfPresent(WebhookNamedRef.self, forKey: .platform)
         self.cta = try container.decodeIfPresent(WebhookCta.self, forKey: .cta)
         self.guardrail = try container.decodeIfPresent(WebhookNamedRef.self, forKey: .guardrail)
+        self.automation = try container.decodeIfPresent(WebhookNamedRef.self, forKey: .automation)
         self.evaluator = try container.decodeIfPresent(WebhookNamedRef.self, forKey: .evaluator)
         self.evaluation = try container.decodeIfPresent(WebhookEvaluation.self, forKey: .evaluation)
+        self.trace = try container.decodeIfPresent(WebhookPayloadTrace.self, forKey: .trace)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -73,8 +83,10 @@ public struct WebhookPayload: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.platform, forKey: .platform)
         try container.encodeIfPresent(self.cta, forKey: .cta)
         try container.encodeIfPresent(self.guardrail, forKey: .guardrail)
+        try container.encodeIfPresent(self.automation, forKey: .automation)
         try container.encodeIfPresent(self.evaluator, forKey: .evaluator)
         try container.encodeIfPresent(self.evaluation, forKey: .evaluation)
+        try container.encodeIfPresent(self.trace, forKey: .trace)
     }
 
     /// Keys for encoding/decoding struct properties.
@@ -87,7 +99,9 @@ public struct WebhookPayload: Codable, Hashable, Sendable {
         case platform
         case cta
         case guardrail
+        case automation
         case evaluator
         case evaluation
+        case trace
     }
 }

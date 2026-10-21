@@ -43,25 +43,52 @@ public final class ChannelsClient: Sendable {
     ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
     ///     _ = try await client.channels.receiveChatwootWebhook(
-    ///         id: "id",
-    ///         request: [
-    ///             "key": .string("value")
-    ///         ]
+    ///         channelId: "91",
+    ///         chatwootSignature: "sha256=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+    ///         chatwootTimestamp: "1710000000",
+    ///         request: .init(
+    ///             event: "message_created",
+    ///             id: 9001,
+    ///             content: .value("Hello from Messenger"),
+    ///             messageType: "incoming",
+    ///             private: false,
+    ///             account: ChatwootWebhookPayloadAccount(
+    ///                 id: 7
+    ///             ),
+    ///             sender: ChatwootWebhookPayloadSender(
+    ///                 id: 55,
+    ///                 name: "Pat",
+    ///                 type: "contact"
+    ///             ),
+    ///             conversation: ChatwootWebhookPayloadConversation(
+    ///                 id: 42,
+    ///                 status: "pending",
+    ///                 account: ChatwootWebhookPayloadConversationAccount(
+    ///                     id: 7
+    ///                 ),
+    ///                 meta: ChatwootConversationMeta(
+    ///                     assigneeType: "AgentBot",
+    ///                     sender: ChatwootConversationMetaSender(
+    ///                         id: 55,
+    ///                         name: "Pat"
+    ///                     )
+    ///                 )
+    ///             )
+    ///         )
     ///     )
     /// }
     ///
     /// try await main()
     /// ```
     ///
-    /// - Parameter id: The channel id
+    /// - Parameter channelId: The channel id
     /// - Parameter chatwootSignature: `sha256=` plus hex HMAC-SHA256 of `{timestamp}.{rawBody}` keyed with the Agent Bot webhook secret. Required when the webhook URL does not include an api_key, and whenever a webhook secret is configured.
     /// - Parameter chatwootTimestamp: Unix timestamp used in the HMAC payload.
-    /// - Parameter request: Chatwoot Agent Bot webhook payload (`event` plus message or conversation fields).
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func receiveChatwootWebhook(id: String, chatwootSignature: String? = nil, chatwootTimestamp: String? = nil, request: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func receiveChatwootWebhook(channelId: String, chatwootSignature: String? = nil, chatwootTimestamp: String? = nil, request: Requests.ChatwootWebhookPayload, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/channels/\(id)/chatwoot",
+            path: "/channels/\(channelId)/chatwoot",
             headers: [
                 "X-Chatwoot-Signature": chatwootSignature, 
                 "X-Chatwoot-Timestamp": chatwootTimestamp
@@ -353,7 +380,7 @@ public final class ChannelsClient: Sendable {
         )
     }
 
-    /// Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+    /// Handles the Meta WhatsApp Cloud API webhook verification handshake. Requires an `api_key` query parameter or `x-api-key` header, then echoes `hub.challenge` when `hub.verify_token` matches the channel's configured token.
     ///
     /// ```swift
     /// import Foundation
@@ -388,7 +415,7 @@ public final class ChannelsClient: Sendable {
         )
     }
 
-    /// Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+    /// Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. An `api_key` query parameter or `x-api-key` header is required. Signature verification via `x-hub-signature-256` is also required when the channel has an App Secret configured.
     ///
     /// ```swift
     /// import Foundation
@@ -409,7 +436,7 @@ public final class ChannelsClient: Sendable {
     /// ```
     ///
     /// - Parameter id: The channel id
-    /// - Parameter hubSignature256: Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+    /// - Parameter hubSignature256: Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured.
     /// - Parameter request: WhatsApp Cloud API webhook payload (`entry` + `changes`).
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func receiveWhatsAppMessage(id: String, hubSignature256: String? = nil, request: [String: JSONValue], requestOptions: RequestOptions? = nil) async throws -> Void {

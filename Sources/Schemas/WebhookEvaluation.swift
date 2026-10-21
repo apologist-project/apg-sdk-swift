@@ -1,6 +1,6 @@
 import Foundation
 
-/// Result of an evaluation run for CTA/guardrail events.
+/// Result of an evaluation run for CTA, guardrail, or automation events.
 public struct WebhookEvaluation: Codable, Hashable, Sendable {
     public let score: Nullable<Double>?
     public let passed: Nullable<Bool>?

@@ -52,7 +52,7 @@ public final class CorpusClient: Sendable {
     /// try await main()
     /// ```
     ///
-    /// - Parameter model: The model type (e.g., 'source')
+    /// - Parameter model: Listing model. One of collection, contributor, organization, or source.
     /// - Parameter id: The ID of the corpus item
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func logCorpusView(model: String, id: String, request: Requests.ViewRequest, requestOptions: RequestOptions? = nil) async throws -> SuccessResponse {
@@ -84,7 +84,7 @@ public final class CorpusClient: Sendable {
     /// try await main()
     /// ```
     ///
-    /// - Parameter model: The model type (e.g., 'source')
+    /// - Parameter model: Listing model. One of collection, contributor, organization, or source.
     /// - Parameter id: The ID of the corpus item
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func logCorpusImpression(model: String, id: String, request: Requests.ImpressionRequest, requestOptions: RequestOptions? = nil) async throws -> SuccessResponse {
@@ -116,7 +116,7 @@ public final class CorpusClient: Sendable {
     /// try await main()
     /// ```
     ///
-    /// - Parameter model: The model type (e.g., 'source')
+    /// - Parameter model: Listing model. One of collection, contributor, organization, or source.
     /// - Parameter id: The numeric ID of the corpus item
     /// - Parameter url: URL-encoded destination to redirect to after logging the referral.
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
@@ -153,7 +153,7 @@ public final class CorpusClient: Sendable {
     /// try await main()
     /// ```
     ///
-    /// - Parameter model: The model type (e.g., 'source')
+    /// - Parameter model: Listing model. One of collection, contributor, organization, or source.
     /// - Parameter id: The ID of the corpus item
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
     public func logCorpusReferral(model: String, id: String, request: Requests.ReferralRequest, requestOptions: RequestOptions? = nil) async throws -> SuccessResponse {

@@ -16,18 +16,26 @@ public final class ChatClient: Sendable {
     /// private func main() async throws {
     ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
-    ///     _ = try await client.chat.listChatCompletions()
+    ///     _ = try await client.chat.listChatCompletions(traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01")
     /// }
     ///
     /// try await main()
     /// ```
     ///
+    /// - Parameter traceparent: W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+    /// - Parameter tracestate: Optional W3C tracestate associated with traceparent.
+    /// - Parameter baggage: Optional W3C baggage. Prompt text is never copied onto spans.
     /// - Parameter perPage: Results per page (clamped to 100).
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func listChatCompletions(page: Int? = nil, perPage: Int? = nil, agentId: String? = nil, channelId: String? = nil, bibleId: String? = nil, cached: String? = nil, client: String? = nil, configId: String? = nil, conversationId: String? = nil, deviceId: String? = nil, flagged: String? = nil, favorited: String? = nil, language: String? = nil, liked: String? = nil, sessionId: String? = nil, userId: String? = nil, minTimestamp: String? = nil, maxTimestamp: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListChatCompletionsResponse {
+    public func listChatCompletions(traceparent: String? = nil, tracestate: String? = nil, baggage: String? = nil, page: Int? = nil, perPage: Int? = nil, agentId: String? = nil, channelId: String? = nil, bibleId: String? = nil, cached: String? = nil, client: String? = nil, configId: String? = nil, conversationId: String? = nil, deviceId: String? = nil, flagged: String? = nil, favorited: String? = nil, language: String? = nil, liked: String? = nil, sessionId: String? = nil, userId: String? = nil, minTimestamp: String? = nil, maxTimestamp: String? = nil, requestOptions: RequestOptions? = nil) async throws -> ListChatCompletionsResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/chat/completions",
+            headers: [
+                "traceparent": traceparent, 
+                "tracestate": tracestate, 
+                "baggage": baggage
+            ],
             queryParams: [
                 "page": page.map { .int($0) }, 
                 "per_page": perPage.map { .int($0) }, 
@@ -62,21 +70,28 @@ public final class ChatClient: Sendable {
     /// private func main() async throws {
     ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
-    ///     _ = try await client.chat.createChatCompletion(request: ChatCompletionRequest.jsonValue(
-    ///         .object([
-    ///             "key": .string("value")
-    ///         ])
-    ///     ))
+    ///     _ = try await client.chat.createChatCompletion(
+    ///         traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+    ///         request: .init()
+    ///     )
     /// }
     ///
     /// try await main()
     /// ```
     ///
+    /// - Parameter traceparent: W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+    /// - Parameter tracestate: Optional W3C tracestate associated with traceparent.
+    /// - Parameter baggage: Optional W3C baggage. Prompt text is never copied onto spans.
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func createChatCompletion(request: ChatCompletionRequest, requestOptions: RequestOptions? = nil) async throws -> ChatCompletionResponse {
+    public func createChatCompletion(traceparent: String? = nil, tracestate: String? = nil, baggage: String? = nil, request: Requests.ChatCompletionRequest, requestOptions: RequestOptions? = nil) async throws -> ChatCompletionResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/chat/completions",
+            headers: [
+                "traceparent": traceparent, 
+                "tracestate": tracestate, 
+                "baggage": baggage
+            ],
             body: request,
             requestOptions: requestOptions,
             responseType: ChatCompletionResponse.self
@@ -200,6 +215,58 @@ public final class ChatClient: Sendable {
             body: request,
             requestOptions: requestOptions,
             responseType: SuccessResponse.self
+        )
+    }
+
+    /// Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.chat.scrubCompletion(id: "id")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The numeric id or UUID of the chat completion
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func scrubCompletion(id: String, requestOptions: RequestOptions? = nil) async throws -> ScrubCompletionResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/chat/completions/\(id)/scrub",
+            requestOptions: requestOptions,
+            responseType: ScrubCompletionResponse.self
+        )
+    }
+
+    /// Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+    ///
+    /// ```swift
+    /// import Foundation
+    /// import Apologist
+    ///
+    /// private func main() async throws {
+    ///     let client = ApologistAgentClient(apiKey: "<value>")
+    ///
+    ///     _ = try await client.chat.anonymizeCompletion(id: "id")
+    /// }
+    ///
+    /// try await main()
+    /// ```
+    ///
+    /// - Parameter id: The numeric id or UUID of the chat completion
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func anonymizeCompletion(id: String, requestOptions: RequestOptions? = nil) async throws -> AnonymizeCompletionResponse {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/chat/completions/\(id)/anonymize",
+            requestOptions: requestOptions,
+            responseType: AnonymizeCompletionResponse.self
         )
     }
 

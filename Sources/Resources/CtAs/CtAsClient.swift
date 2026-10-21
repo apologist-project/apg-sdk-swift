@@ -16,18 +16,14 @@ public final class CtAsClient: Sendable {
     /// private func main() async throws {
     ///     let client = ApologistAgentClient(apiKey: "<value>")
     ///
-    ///     _ = try await client.ctAs.matchCtas(request: CtaMatchRequest.jsonValue(
-    ///         .object([
-    ///             "key": .string("value")
-    ///         ])
-    ///     ))
+    ///     _ = try await client.ctAs.matchCtas(request: .init())
     /// }
     ///
     /// try await main()
     /// ```
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func matchCtas(request: CtaMatchRequest, requestOptions: RequestOptions? = nil) async throws -> MatchCtasResponse {
+    public func matchCtas(request: Requests.CtaMatchRequest, requestOptions: RequestOptions? = nil) async throws -> MatchCtasResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/ctas/match",

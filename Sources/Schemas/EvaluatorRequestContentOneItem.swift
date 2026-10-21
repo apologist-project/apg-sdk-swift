@@ -1,12 +1,15 @@
 import Foundation
 
-public enum ChatCompletionRequest: Codable, Hashable, Sendable {
-    case jsonValue(JSONValue)
+public enum EvaluatorRequestContentOneItem: Codable, Hashable, Sendable {
+    case string(String)
+    case chatMessage(ChatMessage)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(JSONValue.self) {
-            self = .jsonValue(value)
+        if let value = try? container.decode(String.self) {
+            self = .string(value)
+        } else if let value = try? container.decode(ChatMessage.self) {
+            self = .chatMessage(value)
         } else {
             throw DecodingError.dataCorruptedError(
                 in: container,
@@ -18,7 +21,9 @@ public enum ChatCompletionRequest: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.singleValueContainer()
         switch self {
-        case .jsonValue(let value):
+        case .string(let value):
+            try container.encode(value)
+        case .chatMessage(let value):
             try container.encode(value)
         }
     }

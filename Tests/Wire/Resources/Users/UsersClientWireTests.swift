@@ -72,6 +72,7 @@ import Apologist
                     {
                       "id": 1,
                       "name": "name",
+                      "key": "key",
                       "user_id": 1,
                       "team_id": 1,
                       "synced_at": "synced_at"
@@ -94,6 +95,7 @@ import Apologist
                 UserFlag(
                     id: Optional(1),
                     name: Optional("name"),
+                    key: Optional(Nullable<String>.value("key")),
                     userId: Optional(Nullable<Int>.value(1)),
                     teamId: Optional(Nullable<Int>.value(1)),
                     syncedAt: Optional("synced_at")

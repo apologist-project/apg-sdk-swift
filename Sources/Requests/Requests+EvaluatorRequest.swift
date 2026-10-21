@@ -4,6 +4,7 @@ extension Requests {
     public struct EvaluatorRequest: Codable, Hashable, Sendable {
         public let frequencyPenalty: Nullable<Double>?
         public let confidenceThreshold: Nullable<Double>?
+        /// Text to evaluate, an array of strings, or chat messages.
         public let content: EvaluatorRequestContent
         public let model: Nullable<String>?
         public let presencePenalty: Nullable<Double>?

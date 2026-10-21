@@ -3,6 +3,7 @@ import Foundation
 public struct ChatCompletionRequestMetadata: Codable, Hashable, Sendable {
     public let anonymous: Nullable<Bool>?
     public let conversation: Nullable<String>?
+    /// ISO language code for this turn, or `auto` to detect from the prompt.
     public let language: Nullable<String>?
     public let maxMemories: Nullable<Int>?
     public let parentUrl: Nullable<String>?
