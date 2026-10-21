@@ -36,7 +36,10 @@ import Apologist
             page: Optional(1),
             perPage: Optional(1)
         )
-        let response = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.chat.listChatCompletions(
+            traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
@@ -47,33 +50,14 @@ import Apologist
                 #"""
                 {
                   "id": "id",
-                  "object": "object",
+                  "object": "chat.completion",
                   "created": 1,
                   "model": "model",
                   "choices": [
                     {
                       "index": 1,
-                      "message": {
-                        "role": "system",
-                        "content": "content"
-                      },
                       "logprobs": {
-                        "logprobs": {
-                          "key": "value"
-                        }
-                      },
-                      "finish_reason": "finish_reason"
-                    },
-                    {
-                      "index": 1,
-                      "message": {
-                        "role": "system",
-                        "content": "content"
-                      },
-                      "logprobs": {
-                        "logprobs": {
-                          "key": "value"
-                        }
+                        "key": "value"
                       },
                       "finish_reason": "finish_reason"
                     }
@@ -95,37 +79,14 @@ import Apologist
         )
         let expectedResponse = ChatCompletionResponse(
             id: Optional("id"),
-            object: Optional("object"),
+            object: Optional("chat.completion"),
             created: Optional(1),
             model: Optional("model"),
             choices: Optional([
                 ChatCompletionResponseChoicesItem(
                     index: Optional(1),
-                    message: Optional(ChatMessage(
-                        role: Optional(ChatMessageRole.system),
-                        content: Optional("content")
-                    )),
                     logprobs: Optional(Nullable<[String: JSONValue]>.value([
-                        "logprobs": JSONValue.object(
-                            [
-                                "key": JSONValue.string("value")
-                            ]
-                        )
-                    ])),
-                    finishReason: Optional("finish_reason")
-                ),
-                ChatCompletionResponseChoicesItem(
-                    index: Optional(1),
-                    message: Optional(ChatMessage(
-                        role: Optional(ChatMessageRole.system),
-                        content: Optional("content")
-                    )),
-                    logprobs: Optional(Nullable<[String: JSONValue]>.value([
-                        "logprobs": JSONValue.object(
-                            [
-                                "key": JSONValue.string("value")
-                            ]
-                        )
+                        "key": JSONValue.string("value")
                     ])),
                     finishReason: Optional("finish_reason")
                 )
@@ -138,11 +99,8 @@ import Apologist
             cached: Optional(true)
         )
         let response = try await client.chat.createChatCompletion(
-            request: ChatCompletionRequest.jsonValue(
-                .object([
-                    "key": .string("value")
-                ])
-            ),
+            traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+            request: .init(),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
@@ -259,6 +217,78 @@ import Apologist
         let response = try await client.chat.shareCompletion(
             id: "id",
             request: .init(),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func scrubCompletion1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "data": {
+                    "id": "id",
+                    "mode": "scrub",
+                    "messages_redacted": 1,
+                    "remaining": 1
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApologistAgentClient(
+            baseURL: "https://api.fern.com",
+            apiKey: "<value>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ScrubCompletionResponse(
+            data: Optional(CompletionRedactResponse(
+                id: Optional("id"),
+                mode: Optional(CompletionRedactResponseMode.scrub),
+                messagesRedacted: Optional(1),
+                remaining: Optional(1)
+            ))
+        )
+        let response = try await client.chat.scrubCompletion(
+            id: "id",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func anonymizeCompletion1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Foundation.Data(
+                #"""
+                {
+                  "data": {
+                    "id": "id",
+                    "mode": "scrub",
+                    "messages_redacted": 1,
+                    "remaining": 1
+                  }
+                }
+                """#.utf8
+            )
+        )
+        let client = ApologistAgentClient(
+            baseURL: "https://api.fern.com",
+            apiKey: "<value>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = AnonymizeCompletionResponse(
+            data: Optional(CompletionRedactResponse(
+                id: Optional("id"),
+                mode: Optional(CompletionRedactResponseMode.scrub),
+                messagesRedacted: Optional(1),
+                remaining: Optional(1)
+            ))
+        )
+        let response = try await client.chat.anonymizeCompletion(
+            id: "id",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

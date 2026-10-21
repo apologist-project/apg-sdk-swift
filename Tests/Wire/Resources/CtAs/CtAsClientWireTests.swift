@@ -11,14 +11,7 @@ import Apologist
                 {
                   "ctas": [
                     {
-                      "ctas": {
-                        "key": "value"
-                      }
-                    },
-                    {
-                      "ctas": {
-                        "key": "value"
-                      }
+                      "key": "value"
                     }
                   ]
                 }
@@ -33,27 +26,12 @@ import Apologist
         let expectedResponse = MatchCtasResponse(
             ctas: Optional([
                 [
-                    "ctas": JSONValue.object(
-                        [
-                            "key": JSONValue.string("value")
-                        ]
-                    )
-                ],
-                [
-                    "ctas": JSONValue.object(
-                        [
-                            "key": JSONValue.string("value")
-                        ]
-                    )
+                    "key": JSONValue.string("value")
                 ]
             ])
         )
         let response = try await client.ctAs.matchCtas(
-            request: CtaMatchRequest.jsonValue(
-                .object([
-                    "key": .string("value")
-                ])
-            ),
+            request: .init(),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

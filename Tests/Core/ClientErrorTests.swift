@@ -20,7 +20,10 @@ import Testing
         )
 
         do {
-            _ = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.chat.listChatCompletions(
+                traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApologistError {
@@ -51,7 +54,10 @@ import Testing
         )
 
         do {
-            _ = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.chat.listChatCompletions(
+                traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApologistError {
@@ -82,7 +88,10 @@ import Testing
         )
 
         do {
-            _ = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.chat.listChatCompletions(
+                traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApologistError {
@@ -115,7 +124,10 @@ import Testing
         )
 
         do {
-            _ = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.chat.listChatCompletions(
+                traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApologistError {
@@ -146,7 +158,10 @@ import Testing
         )
 
         do {
-            _ = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.chat.listChatCompletions(
+                traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApologistError {
@@ -179,7 +194,10 @@ import Testing
         )
 
         do {
-            _ = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.chat.listChatCompletions(
+                traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApologistError {
@@ -210,7 +228,10 @@ import Testing
         )
 
         do {
-            _ = try await client.chat.listChatCompletions(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.chat.listChatCompletions(
+                traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApologistError {

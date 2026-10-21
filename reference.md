@@ -1,6 +1,6 @@
 # Reference
 ## Chat
-<details><summary><code>client.chat.<a href="/Sources/Resources/Chat/ChatClient.swift">listChatCompletions</a>(page: Int?, perPage: Int?, agentId: String?, channelId: String?, bibleId: String?, cached: String?, client: String?, configId: String?, conversationId: String?, deviceId: String?, flagged: String?, favorited: String?, language: String?, liked: String?, sessionId: String?, userId: String?, minTimestamp: String?, maxTimestamp: String?, requestOptions: RequestOptions?) -> ListChatCompletionsResponse</code></summary>
+<details><summary><code>client.chat.<a href="/Sources/Resources/Chat/ChatClient.swift">listChatCompletions</a>(traceparent: String?, tracestate: String?, baggage: String?, page: Int?, perPage: Int?, agentId: String?, channelId: String?, bibleId: String?, cached: String?, client: String?, configId: String?, conversationId: String?, deviceId: String?, flagged: String?, favorited: String?, language: String?, liked: String?, sessionId: String?, userId: String?, minTimestamp: String?, maxTimestamp: String?, requestOptions: RequestOptions?) -> ListChatCompletionsResponse</code></summary>
 <dl>
 <dd>
 
@@ -33,7 +33,7 @@ import Apologist
 private func main() async throws {
     let client = ApologistAgentClient(apiKey: "<value>")
 
-    _ = try await client.chat.listChatCompletions()
+    _ = try await client.chat.listChatCompletions(traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01")
 }
 
 try await main()
@@ -47,6 +47,30 @@ try await main()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**traceparent:** `String?` — W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tracestate:** `String?` — Optional W3C tracestate associated with traceparent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**baggage:** `String?` — Optional W3C baggage. Prompt text is never copied onto spans.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -207,7 +231,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.chat.<a href="/Sources/Resources/Chat/ChatClient.swift">createChatCompletion</a>(request: ChatCompletionRequest, requestOptions: RequestOptions?) -> ChatCompletionResponse</code></summary>
+<details><summary><code>client.chat.<a href="/Sources/Resources/Chat/ChatClient.swift">createChatCompletion</a>(traceparent: String?, tracestate: String?, baggage: String?, request: Requests.ChatCompletionRequest, requestOptions: RequestOptions?) -> ChatCompletionResponse</code></summary>
 <dl>
 <dd>
 
@@ -240,11 +264,10 @@ import Apologist
 private func main() async throws {
     let client = ApologistAgentClient(apiKey: "<value>")
 
-    _ = try await client.chat.createChatCompletion(request: ChatCompletionRequest.jsonValue(
-        .object([
-            "key": .string("value")
-        ])
-    ))
+    _ = try await client.chat.createChatCompletion(
+        traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+        request: .init()
+    )
 }
 
 try await main()
@@ -262,7 +285,31 @@ try await main()
 <dl>
 <dd>
 
-**request:** `ChatCompletionRequest` 
+**traceparent:** `String?` — W3C Trace Context parent. When present, the Agent continues this trace for the request. Applies to all `/api/v1` endpoints.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tracestate:** `String?` — Optional W3C tracestate associated with traceparent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**baggage:** `String?` — Optional W3C baggage. Prompt text is never copied onto spans.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Requests.ChatCompletionRequest` 
     
 </dd>
 </dl>
@@ -610,6 +657,148 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.chat.<a href="/Sources/Resources/Chat/ChatClient.swift">scrubCompletion</a>(id: String, requestOptions: RequestOptions?) -> ScrubCompletionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replaces this chat completion's message-adjacent text with a placeholder. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Apologist
+
+private func main() async throws {
+    let client = ApologistAgentClient(apiKey: "<value>")
+
+    _ = try await client.chat.scrubCompletion(id: "id")
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The numeric id or UUID of the chat completion
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.chat.<a href="/Sources/Resources/Chat/ChatClient.swift">anonymizeCompletion</a>(id: String, requestOptions: RequestOptions?) -> AnonymizeCompletionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Redacts detected personal data in this chat completion's message-adjacent text with regex, then an optional hosted redaction service when the Agent has that option on. Conversation rows, identifiers, likes, flags, and analytics identity stay in place. Repeat calls finish leftover rows and skip text that is already redacted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Apologist
+
+private func main() async throws {
+    let client = ApologistAgentClient(apiKey: "<value>")
+
+    _ = try await client.chat.anonymizeCompletion(id: "id")
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` — The numeric id or UUID of the chat completion
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.chat.<a href="/Sources/Resources/Chat/ChatClient.swift">getChatCompletion</a>(id: String, requestOptions: RequestOptions?) -> GetChatCompletionResponse</code></summary>
 <dl>
 <dd>
@@ -808,7 +997,7 @@ try await main()
 <dl>
 <dd>
 
-**model:** `String` — The model type (e.g., 'source')
+**model:** `String` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -899,7 +1088,7 @@ try await main()
 <dl>
 <dd>
 
-**model:** `String` — The model type (e.g., 'source')
+**model:** `String` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -990,7 +1179,7 @@ try await main()
 <dl>
 <dd>
 
-**model:** `String` — The model type (e.g., 'source')
+**model:** `String` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -1097,7 +1286,7 @@ try await main()
 <dl>
 <dd>
 
-**model:** `String` — The model type (e.g., 'source')
+**model:** `String` — Listing model. One of collection, contributor, organization, or source.
     
 </dd>
 </dl>
@@ -1468,7 +1657,7 @@ try await main()
 </details>
 
 ## CTAs
-<details><summary><code>client.ctAs.<a href="/Sources/Resources/CtAs/CtAsClient.swift">matchCtas</a>(request: CtaMatchRequest, requestOptions: RequestOptions?) -> MatchCtasResponse</code></summary>
+<details><summary><code>client.ctAs.<a href="/Sources/Resources/CtAs/CtAsClient.swift">matchCtas</a>(request: Requests.CtaMatchRequest, requestOptions: RequestOptions?) -> MatchCtasResponse</code></summary>
 <dl>
 <dd>
 
@@ -1501,11 +1690,7 @@ import Apologist
 private func main() async throws {
     let client = ApologistAgentClient(apiKey: "<value>")
 
-    _ = try await client.ctAs.matchCtas(request: CtaMatchRequest.jsonValue(
-        .object([
-            "key": .string("value")
-        ])
-    ))
+    _ = try await client.ctAs.matchCtas(request: .init())
 }
 
 try await main()
@@ -1523,7 +1708,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `CtaMatchRequest` 
+**request:** `Requests.CtaMatchRequest` 
     
 </dd>
 </dl>
@@ -2291,7 +2476,7 @@ try await main()
 <dl>
 <dd>
 
-Executes a benchmark run and returns the aggregated result with nested evaluators, questions, and a flat evaluations array.
+Executes a benchmark run and returns the aggregated result with nested evaluators, questions, and a flat evaluations array. A run that cannot finish inside one request returns 202 with `completed_at` null and continues in the background. Poll Get a benchmark run until `completed_at` is set.
 </dd>
 </dl>
 </dd>
@@ -2935,7 +3120,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.channels.<a href="/Sources/Resources/Channels/ChannelsClient.swift">receiveChatwootWebhook</a>(id: String, chatwootSignature: String?, chatwootTimestamp: String?, request: [String: JSONValue], requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.channels.<a href="/Sources/Resources/Channels/ChannelsClient.swift">receiveChatwootWebhook</a>(channelId: String, chatwootSignature: String?, chatwootTimestamp: String?, request: Requests.ChatwootWebhookPayload, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2969,10 +3154,38 @@ private func main() async throws {
     let client = ApologistAgentClient(apiKey: "<value>")
 
     _ = try await client.channels.receiveChatwootWebhook(
-        id: "id",
-        request: [
-            "key": .string("value")
-        ]
+        channelId: "91",
+        chatwootSignature: "sha256=2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+        chatwootTimestamp: "1710000000",
+        request: .init(
+            event: "message_created",
+            id: 9001,
+            content: .value("Hello from Messenger"),
+            messageType: "incoming",
+            private: false,
+            account: ChatwootWebhookPayloadAccount(
+                id: 7
+            ),
+            sender: ChatwootWebhookPayloadSender(
+                id: 55,
+                name: "Pat",
+                type: "contact"
+            ),
+            conversation: ChatwootWebhookPayloadConversation(
+                id: 42,
+                status: "pending",
+                account: ChatwootWebhookPayloadConversationAccount(
+                    id: 7
+                ),
+                meta: ChatwootConversationMeta(
+                    assigneeType: "AgentBot",
+                    sender: ChatwootConversationMetaSender(
+                        id: 55,
+                        name: "Pat"
+                    )
+                )
+            )
+        )
     )
 }
 
@@ -2991,7 +3204,7 @@ try await main()
 <dl>
 <dd>
 
-**id:** `String` — The channel id
+**channelId:** `String` — The channel id
     
 </dd>
 </dl>
@@ -3015,7 +3228,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `[String: JSONValue]` — Chatwoot Agent Bot webhook payload (`event` plus message or conversation fields).
+**request:** `Requests.ChatwootWebhookPayload` 
     
 </dd>
 </dl>
@@ -3803,7 +4016,7 @@ try await main()
 <dl>
 <dd>
 
-Handles the Meta WhatsApp Cloud API webhook verification handshake, echoing `hub.challenge` when `hub.verify_token` matches the channel's configured token.
+Handles the Meta WhatsApp Cloud API webhook verification handshake. Requires an `api_key` query parameter or `x-api-key` header, then echoes `hub.challenge` when `hub.verify_token` matches the channel's configured token.
 </dd>
 </dl>
 </dd>
@@ -3902,7 +4115,7 @@ try await main()
 <dl>
 <dd>
 
-Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. Signature verification via `x-hub-signature-256` is used when the channel has an App Secret configured; otherwise the webhook relies on URL secrecy and/or an `api_key` query parameter.
+Receives WhatsApp Cloud API message events for the channel. Payload shape is defined by Meta. An `api_key` query parameter or `x-api-key` header is required. Signature verification via `x-hub-signature-256` is also required when the channel has an App Secret configured.
 </dd>
 </dl>
 </dd>
@@ -3954,7 +4167,7 @@ try await main()
 <dl>
 <dd>
 
-**hubSignature256:** `String?` — Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured and the webhook URL does not include an api_key.
+**hubSignature256:** `String?` — Meta `sha256=<hex>` HMAC of the raw body keyed with the WhatsApp App Secret. Required when the channel has an App Secret configured.
     
 </dd>
 </dl>
