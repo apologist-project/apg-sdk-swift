@@ -5,6 +5,7 @@ public enum WebhookEventInfoKey: String, Codable, Hashable, CaseIterable, Sendab
     case promptSubmit = "prompt_submit"
     case responseStart = "response_start"
     case responseEnd = "response_end"
+    case automationTrigger = "automation_trigger"
     case automationsEnd = "automations_end"
     case responseLike = "response_like"
     case responseFlag = "response_flag"

@@ -36,7 +36,7 @@ With Swift Package Manager (SPM), add the following to the top-level `dependenci
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/apologist-project/apg-sdk-swift", from: "0.0.17"),
+    .package(url: "https://github.com/apologist-project/apg-sdk-swift", from: "0.0.20"),
 ]
 ```
 
@@ -55,11 +55,10 @@ import Apologist
 private func main() async throws {
     let client = ApologistAgentClient(apiKey: "<value>")
 
-    _ = try await client.chat.createChatCompletion(request: ChatCompletionRequest.jsonValue(
-        .object([
-            "key": .string("value")
-        ])
-    ))
+    _ = try await client.chat.createChatCompletion(
+        traceparent: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
+        request: .init()
+    )
 }
 
 try await main()
@@ -115,7 +114,7 @@ The SDK exports all request types as Swift structs. Simply import the SDK module
 ```swift
 import Apologist
 
-let request = Requests.LikeRequest(
+let request = Requests.ChatCompletionRequest(
     ...
 )
 ```
